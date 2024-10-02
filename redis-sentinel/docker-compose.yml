@@ -35,8 +35,7 @@ services:
       - "26379:26379"
     command: ["redis-sentinel", "/etc/redis/sentinel.conf"]
     volumes:
-      # - ./sentinel1.conf:/etc/redis/sentinel.conf
-      - ./redis:/etc/redis
+      - ./redis-sentinel1-conf:/etc/redis
     networks:
       - redis-net
 
@@ -46,8 +45,7 @@ services:
       - "26380:26379"
     command: ["redis-sentinel", "/etc/redis/sentinel.conf"]
     volumes:
-      - ./redis:/etc/redis
-      # - ./sentinel2.conf:/etc/redis/sentinel.conf
+      - ./redis-sentinel2-conf:/etc/redis
     networks:
       - redis-net
 
@@ -57,7 +55,6 @@ services:
       - "26381:26379"
     command: ["redis-sentinel", "/etc/redis/sentinel.conf"]
     volumes:
-      - ./redis:/etc/redis
-      # - ./sentinel3.conf:/etc/redis/sentinel.conf
+      - ./redis-sentinel3-conf:/etc/redis
     networks:
       - redis-net
