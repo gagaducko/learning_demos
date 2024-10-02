@@ -3,15 +3,6 @@ from redis.cluster import ClusterNode
 from redis.exceptions import RedisError
 
 # redis集群节点配置
-# startup_nodes = [
-#     {"host": "172.24.0.2", "port": 7001},
-#     {"host": "172.24.0.3", "port": 7002},
-#     {"host": "172.24.0.4", "port": 7003},
-#     {"host": "172.24.0.5", "port": 7004},
-#     {"host": "172.24.0.6", "port": 7005},
-#     {"host": "172.24.0.7", "port": 7006}
-# ]
-
 startup_nodes = [
     ClusterNode("172.24.0.2", 7001),
     ClusterNode("172.24.0.3", 7002),

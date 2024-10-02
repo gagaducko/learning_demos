@@ -1,0 +1,63 @@
+version: '3.8'
+
+networks:
+  redis-net:
+    driver: bridge
+
+services:
+  redis-master:
+    image: redis:bullseye
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--protected-mode no"]
+    networks:
+      - redis-net
+  
+  redis-slave1:
+    image: redis:bullseye
+    ports:
+      - "6380:6379"
+    command: ["redis-server", "--protected-mode no", "--slaveof", "redis-master", "6379"]
+    networks:
+      - redis-net
+
+  redis-slave2:
+    image: redis:bullseye
+    ports:
+      - "6381:6379"
+    command: ["redis-server", "--protected-mode no", "--slaveof", "redis-master", "6379"]
+    networks:
+      - redis-net
+
+  sentinel1:
+    image: redis:bullseye
+    ports:
+      - "26379:26379"
+    command: ["redis-sentinel", "/etc/redis/sentinel.conf"]
+    volumes:
+      # - ./sentinel1.conf:/etc/redis/sentinel.conf
+      - ./redis:/etc/redis
+    networks:
+      - redis-net
+
+  sentinel2:
+    image: redis:bullseye
+    ports:
+      - "26380:26379"
+    command: ["redis-sentinel", "/etc/redis/sentinel.conf"]
+    volumes:
+      - ./redis:/etc/redis
+      # - ./sentinel2.conf:/etc/redis/sentinel.conf
+    networks:
+      - redis-net
+
+  sentinel3:
+    image: redis:bullseye
+    ports:
+      - "26381:26379"
+    command: ["redis-sentinel", "/etc/redis/sentinel.conf"]
+    volumes:
+      - ./redis:/etc/redis
+      # - ./sentinel3.conf:/etc/redis/sentinel.conf
+    networks:
+      - redis-net
