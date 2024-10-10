@@ -43,10 +43,15 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<!-- Seata 核心依赖 -->
+<!--		<dependency>-->
+<!--			<groupId>io.seata</groupId>-->
+<!--			<artifactId>seata-all</artifactId>-->
+<!--			<version>1.6.1</version>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-seata</artifactId>
-			<version>2.1.1.RELEASE</version>
+			<version>2022.0.0.0-RC2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba.cloud</groupId>

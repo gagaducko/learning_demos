@@ -23,7 +23,7 @@ public class AccountService {
             restTemplate.postForObject(url,null, String.class); // 发起Post请求
         } catch (Exception e) {
             // 处理调用失败的情况
-            e.printStackTrace();
+            throw e;
         }
     }
 }

@@ -31,27 +31,26 @@ public class OrderService {
         try {
             productService.reduceStock(productId, count);
         } catch (Exception e) {
-            log.error("Error reducing stock", e);
-            throw e;
+            throw new RuntimeException("库存扣减失败，回滚事务：", e);
         }
 
         // 扣减账户余额
         BigDecimal totalPrice = price.multiply(BigDecimal.valueOf(count));
+
         try {
             accountService.debit(userId, totalPrice);
         } catch (Exception e) {
-            log.error("Error reducing stock", e);
-            throw e;
+            throw new RuntimeException("账户余额扣减失败，回滚事务：", e);
         }
-
-        // 创建订单
-        String sql = "INSERT INTO orders (user_id, product_id, status) VALUES (?, ?, ?)";
-        jdbcTemplate.update(sql, userId, productId, "CREATED");
 
         // 模拟异常，事务应回滚
         if (totalPrice.compareTo(BigDecimal.ZERO) < 0) {
             throw new RuntimeException("非法金额，事务回滚");
         }
+
+        // 创建订单
+        String sql = "INSERT INTO orders (user_id, product_id, status) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, userId, productId, "CREATED");
     }
 }
 
